@@ -16,6 +16,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
+import javax.persistence.TypedQuery;
 import org.primefaces.context.RequestContext;
 
 /**
@@ -103,6 +104,77 @@ public class AlumnosBean implements Serializable{
         }
         catch(Exception ex)
         {
+            ex.printStackTrace();
+        }
+        finally
+        {
+            em.close();
+            emf.close();            
+        }
+    }
+    
+    public void elim(int codiAlum) {
+        RequestContext ctx = RequestContext.getCurrentInstance();
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("Guia5");
+        EntityManager em = emf.createEntityManager();
+        EntityTransaction et = em.getTransaction();
+        et.begin();
+        Alumnos alumno;
+        try {
+            alumno = em.getReference(Alumnos.class, codiAlum);
+            alumno.getCodiAlum();
+            em.remove(alumno);
+            et.commit();
+            ctx.execute("setMessage('MESS_SUCC','Mensaje', 'Datos eliminados');");
+        } catch (Exception ex) {
+            ctx.execute("setMessage('MESS_SUCC','Mensaje', 'Datos NO eliminados');");
+            et.rollback();
+            ex.printStackTrace();
+        }
+        finally
+        {
+            em.close();
+            emf.close();            
+        }
+    }
+    public void actu() {
+        RequestContext ctx = RequestContext.getCurrentInstance();
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("Guia5");
+        EntityManager em = emf.createEntityManager();
+        em.getTransaction().begin();
+        try {
+            Alumnos obj = em.find(Alumnos.class, this.objeAlum.getCodiAlum());
+            obj.setNombAlum(this.objeAlum.getNombAlum());
+            obj.setApelAlum(this.objeAlum.getApelAlum());
+            obj.setFechNaciAlum(this.objeAlum.getFechNaciAlum());
+            obj.setMailAlum(this.objeAlum.getMailAlum());
+            obj.setTeleAlum(this.objeAlum.getTeleAlum());
+            obj.setDireAlum(this.objeAlum.getDireAlum());
+            obj.setGeneAlum(this.objeAlum.getGeneAlum());
+            em.getTransaction().commit();
+            ctx.execute("setMessage('MESS_SUCC','Mensaje', 'Datos actualizados');");
+        } catch (Exception ex) {
+            ctx.execute("setMessage('MESS_SUCC','Mensaje', 'Datos NO actualizados');");
+            ex.printStackTrace();
+        }
+        finally
+        {
+            em.close();
+            emf.close();            
+        }
+    }
+    
+    public void cons(int codiAlum) {
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("Guia5");
+        EntityManager em = emf.createEntityManager();
+        try {
+            TypedQuery<Alumnos> query = em.createNamedQuery("Alumnos.findByCodiAlum", Alumnos.class);
+            query.setParameter("codiAlum", codiAlum);
+            List<Alumnos> result = query.getResultList();
+            for (Alumnos l : result) {
+                this.objeAlum = new Alumnos(l.getCodiAlum(), l.getNombAlum(), l.getApelAlum(), l.getFechNaciAlum(), l.getMailAlum(), l.getTeleAlum(), l.getDireAlum(), l.getGeneAlum());                
+            }
+        } catch (Exception ex) {
             ex.printStackTrace();
         }
         finally
