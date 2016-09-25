@@ -2,8 +2,26 @@ $(document).ready(function() {
     $.fn.initBootTable = function() {
         $(this).bootstrapTable('destroy');
         $(this).bootstrapTable().
-        on('check.bs.table', function (e, row) {
-            setMessage('MESS_SUCC', 'Atención', 'Ha seleccionado a: ' + row.nomb.trim());
+        unbind('check.bs.table').on('check.bs.table', function (e, row) {
+            consAlum([{name : 'codiAlumPara', value : row.id.trim()}]);
+        });
+        return false;
+    };
+    //Eliminar
+    $.fn.funcElimAlum = function() {
+        $(this).confirmation(
+        {
+            popout: true,
+            onConfirm: function() {
+                elimAlum();
+                $('[data-toggle="confirmation-popout"]').confirmation('hide');
+                return false;
+            },
+            onCancel: function()
+            {
+                $('[data-toggle="confirmation-popout"]').confirmation('hide');
+                return false;
+            }
         });
         return false;
     };
@@ -14,4 +32,5 @@ $(document).ready(function() {
 function INIT_OBJE_ALUM()
 {
     $("#TablAlum").initBootTable();
+    $("#FormAlum\\:btonElim").funcElimAlum();
 }

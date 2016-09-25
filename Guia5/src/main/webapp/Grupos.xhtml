@@ -56,68 +56,73 @@ and open the template in the editor.
                     <div class="panel-body">
                         <h:form>
                             <!--Form exclusivo para los remotos-->
-                            <p:remoteCommand name="consAlum" actionListener="#{alumnosBean.cons()}" update=":FormAlum" 
-                                             oncomplete="INIT_OBJE_ALUM();" global="true"/>
-                            <p:remoteCommand name="elimAlum" actionListener="#{alumnosBean.elim()}" update=":FormAlum :ContAlum" oncomplete="INIT_OBJE_ALUM();" />
+                            <p:remoteCommand name="consGrup" actionListener="#{gruposBean.cons()}" update=":FormAlum" 
+                                             oncomplete="INIT_OBJE_GRUP();" global="true"/>
+                            <p:remoteCommand name="elimGrup" actionListener="#{gruposBean.elim()}" update=":FormAlum :ContAlum" oncomplete="INIT_OBJE_ALUM();" />
                         </h:form>
                         <h:form id="FormAlum">
-                            <h:inputHidden id="codi" value="#{alumnosBean.objeAlum.codiAlum}" />
+                            <h:inputHidden id="codi" value="#{gruposBean.objeGrup.codiGrup}" />
                             <div class="input-group input-group-xs">
                                 <h:outputLabel  for="nomb" value="Nombre: "/>
-                                <h:inputText id="nomb" value="#{alumnosBean.objeAlum.nombAlum}" class="form-control" />
+                                <h:inputText id="nomb" value="#{gruposBean.objeGrup.nombGrup}" class="form-control" />
                                 <h:message for="nomb" errorClass="field-error" />
                             </div>
                             <div class="input-group input-group-xs">
-                                <h:outputLabel  for="apel" value="Apellido: "/>
-                                <h:inputText id="apel" value="#{alumnosBean.objeAlum.apelAlum}" class="form-control" />
-                                <h:message for="apel" errorClass="field-error" />
+                                <h:outputLabel  for="fechini" value="Fecha inicio: "/>  
+                                <h:inputText id="fechini" value="#{gruposBean.objeGrup.fechInicGrup}" class="form-control" />
+                                    
+                                <h:message for="fechini" errorClass="field-error" />
                             </div>
                             <div class="input-group input-group-xs">
-                                <h:outputLabel  for="fechNaci" value="Fecha Nacimiento: "/>
-                                <h:inputText id="fechNaci" value="#{alumnosBean.objeAlum.fechNaciAlum}" class="form-control">
+                                <h:outputLabel  for="fechfin" value="Fecha final: "/>
+                                <h:inputText id="fechfin" value="#{gruposBean.objeGrup.horaFinaGrup}" class="form-control">
                                     <f:convertDateTime pattern="dd/MM/yyyy" />
                                 </h:inputText>
-                                <h:message for="fechNaci" errorClass="field-error" />
+                                <h:message for="fechfin" errorClass="field-error" />
                             </div>
                             <div class="input-group input-group-xs">
-                                <h:outputLabel  for="mail" value="E-mail: "/>
-                                <h:inputText id="mail" value="#{alumnosBean.objeAlum.mailAlum}" class="form-control" />
-                                <h:message for="mail" errorClass="field-error" />
+                                <h:outputLabel  for="horaIni" value="Hora Inicio: "/>
+                                <h:inputText id="horaIni" value="#{gruposBean.objeGrup.horaInicGrup}" class="form-control" />
+                                <h:message for="horaIni" errorClass="field-error" />
                             </div>
                             <div class="input-group input-group-xs">
-                                <h:outputLabel  for="tele" value="Teléfono: "/>
-                                <h:inputText id="tele" value="#{alumnosBean.objeAlum.teleAlum}" class="form-control" />
-                                <h:message for="tele" errorClass="field-error" />
+                                <h:outputLabel  for="horaFin" value="Hora Fin: "/>
+                                <h:inputText id="horaFin" value="#{gruposBean.objeGrup.horaFinaGrup}" class="form-control" />
+                                <h:message for="horaFin" errorClass="field-error" />
                             </div>
                             <div class="input-group input-group-xs">
-                                <h:outputLabel  for="dire" value="Dirección: "/>
-                                <h:inputText id="dire" value="#{alumnosBean.objeAlum.direAlum}" class="form-control" />
-                                <h:message for="dire" errorClass="field-error" />
-                            </div>
-                            <div class="input-group input-group-xs">
-                                <h:outputLabel  for="gene" value="Género: "/>
-                                <h:selectOneMenu id="gene" value="#{alumnosBean.objeAlum.geneAlum}" class="form-control">
+                                <h:outputLabel  for="curs" value="Curso: "/>
+                                <h:selectOneMenu id="curs" value="#{cursosBean.objeCurs.codiCurs}" class="form-control">
                                     <f:selectItem pt:data-hidden="true" itemLabel="Seleccione..."/>
-                                    <f:selectItem itemValue="M" itemLabel="Masculino"/>
-                                    <f:selectItem itemValue="F" itemLabel="Femenino"/>
+                                    <f:selectItems value="#{cursosBean.listCurs}" var="lst2" itemLabel="#{lst2.nombCurs}" itemValue="#{lst2}"/>
+                                    <f:converter converterId="DemoConv"/>
                                 </h:selectOneMenu>
-                                <h:message for="gene" errorClass="field-error" />
+                                <h:message for="alum" errorClass="field-error" />
+                            </div>
+                            <div class="input-group input-group-xs">
+                                <h:outputLabel  for="prof" value="Profesor: "/>
+                                <h:selectOneMenu id="prof" value="#{profesoresBean.objeProf.codiProf}" class="form-control">
+                                    <f:selectItem pt:data-hidden="true" itemLabel="Seleccione..."/>
+                                    <f:selectItems value="#{profesoresBean.listProf}" var="lst2" itemLabel="#{lst2.nombProf}" itemValue="#{lst2}"/>
+                                    <f:converter converterId="DemoConv"/>
+                                </h:selectOneMenu>
+                                <h:message for="alum" errorClass="field-error" />
                             </div>
                             <div class="input-group-btn right" style="padding-top: 5px;">
                                 <div class="btn-group">
                                     <h:commandLink id="btonCanc" class="btn btn-default btn-xs">
-                                        <p:ajax listener="#{alumnosBean.limpForm()}" process="@form" update="@form" global="true"/>
+                                        <p:ajax listener="#{gruposBean.limpForm()}" process="@form" update="@form" global="true"/>
                                         <i class="fa fa-mail-forward"/> Cancelar
                                     </h:commandLink>
-                                    <h:commandLink id="btonGuar" class="btn btn-success btn-xs" rendered="#{alumnosBean.guardar}">
-                                        <p:ajax listener="#{alumnosBean.guar()}" process="@form" update="@form :ContAlum" oncomplete="INIT_OBJE_ALUM();" />
+                                    <h:commandLink id="btonGuar" class="btn btn-success btn-xs" rendered="#{gruposBean.guardar}">
+                                        <p:ajax listener="#{gruposBean.guar()}" process="@form" update="@form :ContAlum" oncomplete="INIT_OBJE_GRUP();" />
                                         <i class="fa fa-plus"/> Guardar
                                     </h:commandLink>
-                                    <h:commandLink id="btonModi" class="btn btn-primary btn-xs" rendered="#{!alumnosBean.guardar}">
-                                        <p:ajax listener="#{alumnosBean.modi()}" process="@form" update="@form :ContAlum" oncomplete="INIT_OBJE_ALUM();" />
+                                    <h:commandLink id="btonModi" class="btn btn-primary btn-xs" rendered="#{!gruposBean.guardar}">
+                                        <p:ajax listener="#{gruposBean.modi()}" process="@form" update="@form :ContAlum" oncomplete="INIT_OBJE_GRUP();" />
                                         <i class="fa fa-edit"/> Modificar
                                     </h:commandLink>
-                                    <h:outputLink id="btonElim" class="btn btn-danger btn-xs" rendered="#{!alumnosBean.guardar}" 
+                                    <h:outputLink id="btonElim" class="btn btn-danger btn-xs" rendered="#{!gruposBean.guardar}" 
                                         pt:data-toggle="confirmation" pt:data-btn-ok-label="Sí" pt:data-btn-ok-icon="fa fa-times"
                                         pt:data-btn-ok-class="btn-danger btn-xs" pt:data-btn-cancel-label="No" pt:data-btn-cancel-icon="fa fa-mail-forward"
                                         pt:data-btn-cancel-class="btn-default btn-xs" pt:data-title="¿Esta seguro que desea eliminar?">
@@ -134,7 +139,7 @@ and open the template in the editor.
                     <div class="panel-heading">Tabla de Datos</div>
                     <div class="panel-body">
                         <h:panelGroup id="ContAlum">
-                            <h:dataTable pt:data-id="TablAlum" id="TablAlum" value="#{alumnosBean.listAlum}"
+                            <h:dataTable pt:data-id="TablAlum" id="TablAlum" value="#{gruposBean.listGrup}"
                                         var="fila" class="boottable" pt:data-toolbar="#toolbar"
                                         styleClass="table-hover table-bordered table-condensed table-striped table-responsive"
                                         pt:data-show-refresh="false" pt:data-show-toggle="false" pt:data-show-columns="false" 
@@ -145,29 +150,41 @@ and open the template in the editor.
                                </h:column>
                                <h:column pt:data-align="right" pt:data-sortable="true" pt:data-field="id">
                                    <f:facet name="header">Código</f:facet>
-                                   <h:outputText value="#{fila.codiAlum}"/>
+                                   <h:outputText value="#{fila.codiGrup}"/>
                                </h:column>
                                <h:column pt:data-sortable="true" pt:data-field="nomb">
                                    <f:facet name="header">Nombre</f:facet>
-                                   <h:outputText value="#{fila.nombAlum.concat(' ').concat(fila.apelAlum)}"/>   
+                                   <h:outputText value="#{fila.nombGrup}"/>   
                                </h:column>
                                <h:column pt:data-sortable="true">
-                                   <f:facet name="header">Fecha Nac.</f:facet>
-                                   <h:outputText value="#{fila.fechNaciAlum}">
+                                   <f:facet name="header">Fecha Ini.</f:facet>
+                                   <h:outputText value="#{fila.fechInicGrup}">
                                        <f:convertDateTime pattern="dd/MM/yyyy" timeZone="GMT-6"/>
                                    </h:outputText>                            
                                </h:column>
-                               <h:column pt:data-sortable="true">
-                                   <f:facet name="header">Email</f:facet>
-                                   <h:outputText value="#{fila.mailAlum}"/>
+                                <h:column pt:data-sortable="true">
+                                   <f:facet name="header">Fecha Fin.</f:facet>
+                                   <h:outputText value="#{fila.fechFinaGrup}">
+                                       <f:convertDateTime pattern="dd/MM/yyyy" timeZone="GMT-6"/>
+                                   </h:outputText>                            
+                               </h:column>
+                                <h:column pt:data-sortable="true">
+                                   <f:facet name="header">Hora Ini.</f:facet>
+                                   <h:outputText value="#{fila.horaInicGrup}">
+                                   </h:outputText>                            
+                               </h:column>
+                                <h:column pt:data-sortable="true">
+                                   <f:facet name="header">Hora Fin.</f:facet>
+                                   <h:outputText value="#{fila.horaFinaGrup}">
+                                   </h:outputText>                            
                                </h:column>
                                <h:column pt:data-sortable="true">
-                                   <f:facet name="header">Teléfono</f:facet> 
-                                   <h:outputText value="#{fila.teleAlum}"/>
+                                   <f:facet name="header">Curso</f:facet>
+                                   <h:outputText value="#{fila.codiCurs.nombCurs}"/>
                                </h:column>
                                <h:column pt:data-sortable="true">
-                                   <f:facet name="header">Dirección</f:facet> 
-                                   <h:outputText value="#{fila.direAlum}"/>
+                                   <f:facet name="header">Profesor</f:facet> 
+                                   <h:outputText value="#{fila.codiProf.nombProf}"/>
                                </h:column>
                            </h:dataTable>
                         </h:panelGroup>
