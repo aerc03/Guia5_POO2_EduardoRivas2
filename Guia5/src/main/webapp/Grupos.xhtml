@@ -56,9 +56,9 @@ and open the template in the editor.
                     <div class="panel-body">
                         <h:form>
                             <!--Form exclusivo para los remotos-->
-                            <p:remoteCommand name="consGrup" actionListener="#{gruposBean.cons()}" update=":FormAlum" 
-                                             oncomplete="INIT_OBJE_GRUP();" global="true"/>
-                            <p:remoteCommand name="elimGrup" actionListener="#{gruposBean.elim()}" update=":FormAlum :ContAlum" oncomplete="INIT_OBJE_ALUM();" />
+                            <p:remoteCommand name="consAlum" actionListener="#{gruposBean.cons()}" update=":FormAlum" 
+                                             oncomplete="INIT_OBJE_ALUM();" global="true"/>
+                            <p:remoteCommand name="elimAlum" actionListener="#{gruposBean.elim()}" update=":FormAlum :ContAlum" oncomplete="INIT_OBJE_ALUM();" />
                         </h:form>
                         <h:form id="FormAlum">
                             <h:inputHidden id="codi" value="#{gruposBean.objeGrup.codiGrup}" />
@@ -115,11 +115,11 @@ and open the template in the editor.
                                         <i class="fa fa-mail-forward"/> Cancelar
                                     </h:commandLink>
                                     <h:commandLink id="btonGuar" class="btn btn-success btn-xs" rendered="#{gruposBean.guardar}">
-                                        <p:ajax listener="#{gruposBean.guar()}" process="@form" update="@form :ContAlum" oncomplete="INIT_OBJE_GRUP();" />
+                                        <p:ajax listener="#{gruposBean.guar()}" process="@form" update="@form :ContAlum" oncomplete="INIT_OBJE_ALUM();" />
                                         <i class="fa fa-plus"/> Guardar
                                     </h:commandLink>
                                     <h:commandLink id="btonModi" class="btn btn-primary btn-xs" rendered="#{!gruposBean.guardar}">
-                                        <p:ajax listener="#{gruposBean.modi()}" process="@form" update="@form :ContAlum" oncomplete="INIT_OBJE_GRUP();" />
+                                        <p:ajax listener="#{gruposBean.modi()}" process="@form" update="@form :ContAlum" oncomplete="INIT_OBJE_ALUM();" />
                                         <i class="fa fa-edit"/> Modificar
                                     </h:commandLink>
                                     <h:outputLink id="btonElim" class="btn btn-danger btn-xs" rendered="#{!gruposBean.guardar}" 

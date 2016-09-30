@@ -56,11 +56,11 @@ and open the template in the editor.
                     <div class="panel-body">
                         <h:form>
                             <!--Form exclusivo para los remotos-->
-                            <p:remoteCommand name="consCurs" actionListener="#{cursosBean.cons()}" update=":FormCurs" 
-                                             oncomplete="INIT_OBJE_CURS();" global="true"/>
-                            <p:remoteCommand name="elimCurs" actionListener="#{cursosBean.elim()}" update=":FormCurs :ContCurs" oncomplete="INIT_OBJE_ALUM();" />
+                            <p:remoteCommand name="consAlum" actionListener="#{cursosBean.cons()}" update=":FormAlum" 
+                                             oncomplete="INIT_OBJE_ALUM();" global="true"/>
+                            <p:remoteCommand name="elimAlum" actionListener="#{cursosBean.elim()}" update=":FormAlum :ContCurs" oncomplete="INIT_OBJE_ALUM();" />
                         </h:form>
-                        <h:form id="FormCurs">
+                        <h:form id="FormAlum">
                             <h:inputHidden id="codi" value="#{cursosBean.objeCurs.codiCurs}" />
                             <div class="input-group input-group-xs">
                                 <h:outputLabel  for="nomb" value="Nombre: "/>
@@ -108,7 +108,7 @@ and open the template in the editor.
                     <div class="panel-heading">Tabla de Datos</div>
                     <div class="panel-body">
                         <h:panelGroup id="ContCurs">
-                            <h:dataTable pt:data-id="TablaCurs" id="TablaCurs" value="#{cursosBean.listCurs}"
+                            <h:dataTable pt:data-id="TablAlum" id="TablAlum" value="#{cursosBean.listCurs}"
                                         var="fila" class="boottable" pt:data-toolbar="#toolbar"
                                         styleClass="table-hover table-bordered table-condensed table-striped table-responsive"
                                         pt:data-show-refresh="false" pt:data-show-toggle="false" pt:data-show-columns="false" 
@@ -126,11 +126,11 @@ and open the template in the editor.
                                    <h:outputText value="#{fila.nombCurs}"/>   
                                </h:column>
                                <h:column pt:data-sortable="true">
-                                   <f:facet name="header">Duracion</f:facet>
-                                   <h:outputText value="#{fila.duraCurs}" />
+                                   <f:facet name="header">Email</f:facet>
+                                   <h:outputText value="#{fila.duraCurs}"/>
                                </h:column>
                                <h:column pt:data-sortable="true">
-                                   <f:facet name="header">Costo</f:facet>
+                                   <f:facet name="header">Teléfono</f:facet> 
                                    <h:outputText value="#{fila.costCurs}"/>
                                </h:column>
                            </h:dataTable>
