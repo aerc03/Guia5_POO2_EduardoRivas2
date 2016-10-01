@@ -7,6 +7,7 @@ package com.sv.udb.controlador;
 
 import com.sv.udb.ejb.GruposFacadeLocal;
 import com.sv.udb.modelo.Grupos;
+import com.sv.udb.utils.log4j;
 import java.io.Serializable;
 import java.util.List;
 import javax.annotation.PostConstruct;
@@ -31,6 +32,7 @@ public class GruposBean implements Serializable{
     private Grupos objeGrup;
     private List<Grupos> listGrup;
     private boolean guardar;
+    log4j log;
 
     public Grupos getObjeGrup() {
         return objeGrup;
@@ -62,6 +64,7 @@ public class GruposBean implements Serializable{
         this.guardar = true;
         this.consTodo();
         this.listGrup = FCDEGrupos.findAll();
+        log = new log4j();
     }
 
     public List<Grupos> getListGrup() {

@@ -9,6 +9,7 @@ import com.sv.udb.ejb.CursosFacadeLocal;
 import com.sv.udb.ejb.CursosFacadeLocal;
 import com.sv.udb.modelo.Cursos;
 import com.sv.udb.modelo.Cursos;
+import com.sv.udb.utils.log4j;
 import java.io.Serializable;
 import java.util.List;
 import javax.annotation.PostConstruct;
@@ -31,6 +32,7 @@ public class CursosBean implements Serializable{
     private Cursos objeCurs;
     private List<Cursos> listCurs;
     private boolean guardar;
+    log4j log;
 
     public Cursos getObjeCurs() {
         return objeCurs;
@@ -70,6 +72,7 @@ public class CursosBean implements Serializable{
         this.objeCurs = new Cursos();
         this.guardar = true;
         this.consTodo();
+        log = new log4j();
     }
     
     public void limpForm()
@@ -83,14 +86,17 @@ public class CursosBean implements Serializable{
         RequestContext ctx = RequestContext.getCurrentInstance(); //Capturo el contexto de la página
         try
         {
+            this.objeCurs.setNombCurs(null);
             FCDECurs.create(this.objeCurs);
             this.listCurs.add(this.objeCurs);
             this.limpForm();
             ctx.execute("setMessage('MESS_SUCC', 'Atención', 'Datos guardados')");
+            log.info("Curso: " + this.objeCurs.getNombCurs() + " guardado.");
         }
         catch(Exception ex)
         {
             ctx.execute("setMessage('MESS_ERRO', 'Atención', 'Error al guardar ')");
+            log.error("Error al guardar el curso.");
         }
         finally
         {
@@ -107,10 +113,12 @@ public class CursosBean implements Serializable{
             FCDECurs.edit(this.objeCurs);
             this.listCurs.add(this.objeCurs); //Agrega el objeto modificado
             ctx.execute("setMessage('MESS_SUCC', 'Atención', 'Datos Modificados')");
+            log.info("Curso: " + this.objeCurs.getNombCurs() + " fue modificado.");
         }
         catch(Exception ex)
         {
             ctx.execute("setMessage('MESS_ERRO', 'Atención', 'Error al modificar ')");
+            log.error("Error al modificar el curso.");
         }
         finally
         {
@@ -127,10 +135,12 @@ public class CursosBean implements Serializable{
                 this.listCurs.remove(this.objeCurs);
                 this.limpForm();
                 ctx.execute("setMessage('MESS_SUCC', 'Atención', 'Datos Eliminados')");
+                log.info("Curso Eliminado.");
             }
             catch(Exception ex)
             {
                 ctx.execute("setMessage('MESS_ERRO', 'Atención', 'Error al eliminar')");
+                log.error("Error al eliminar el curso.");
             }
             finally
             {
@@ -147,6 +157,7 @@ public class CursosBean implements Serializable{
             catch(Exception ex)
             {
                 ex.printStackTrace();
+                log.error("Error al guardar los cursos.");
             }
             finally
             {
@@ -168,6 +179,7 @@ public class CursosBean implements Serializable{
             catch(Exception ex)
             {
                 ctx.execute("setMessage('MESS_ERRO', 'Atención', 'Error al consultar')");
+                log.error("Error al consultar el curso.");
             }
             finally
             {

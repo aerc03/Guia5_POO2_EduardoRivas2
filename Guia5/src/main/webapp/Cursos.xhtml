@@ -126,12 +126,12 @@ and open the template in the editor.
                                    <h:outputText value="#{fila.nombCurs}"/>   
                                </h:column>
                                <h:column pt:data-sortable="true">
-                                   <f:facet name="header">Email</f:facet>
+                                   <f:facet name="header">Duracion</f:facet>
                                    <h:outputText value="#{fila.duraCurs}"/>
                                </h:column>
                                <h:column pt:data-sortable="true">
-                                   <f:facet name="header">Teléfono</f:facet> 
-                                   <h:outputText value="#{fila.costCurs}"/>
+                                   <f:facet name="header">Costo</f:facet> 
+                                   <h:outputText value="$#{fila.costCurs}"/>
                                </h:column>
                            </h:dataTable>
                         </h:panelGroup>
